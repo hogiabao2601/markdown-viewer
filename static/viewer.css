@@ -1,0 +1,262 @@
+/* Eye-friendly palette: warm paper (light) / soft charcoal (dark), no pure white or black.
+   Accent colors are muted and keep text contrast at WCAG AA or better on the background.
+   Theme: <html data-theme="light|dark"> forces a theme; without it the page follows macOS.
+   Every color is light-dark(<light>, <dark>), resolved by the color-scheme set here. */
+:root { color-scheme: light dark; }
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+:root {
+  --toc-width: 280px;
+
+  --bg:             light-dark(#f7f3ea, #1f2125);
+  --fg:             light-dark(#3a3632, #d4d0c8);
+  --fg-muted:       light-dark(#756c61, #9a958c);
+  --border:         light-dark(#e2d9c8, #383b41);
+  --code-bg:        light-dark(#efe8da, #272a2f);
+  --toc-bg:         light-dark(#f0eadd, #1a1c1f);
+  --accent:         light-dark(#1a6fb0, #6cb6ff);
+  --accent-bg:      light-dark(rgba(26, 111, 176, .10), #2a3038);
+
+  --h1:             light-dark(#1f6f6b, #6fc3b8);   /* teal */
+  --h2:             light-dark(#2f5d9a, #8ab4f0);   /* blue */
+  --h2-tint:        light-dark(rgba(47, 93, 154, .10), rgba(138, 180, 240, .10));
+  --h3:             light-dark(#8a4b7a, #d59ad0);   /* plum */
+  --h4:             light-dark(#8a5a12, #e3b66b);   /* amber */
+  --link:           light-dark(#1a6fb0, #6cb6ff);
+  --link-hover:     light-dark(#b04e14, #ffab70);
+  --link-visited:   light-dark(#7b4fa3, #c39bff);   /* visited links turn purple, so readers see where they have been */
+  --strong:         light-dark(#8a3b12, #f2c879);
+  --em:             light-dark(#4f6a2a, #a8c97f);
+  --mark:           light-dark(rgba(255, 196, 64, .45), rgba(242, 200, 121, .32));
+  --code-fg:        light-dark(#b4472a, #f0a07a);
+  --inline-code-bg: light-dark(rgba(214, 107, 64, .12), rgba(240, 160, 122, .12));
+  --quote-bar:      light-dark(#1f6f6b, #6fc3b8);
+  --quote-bg:       light-dark(rgba(31, 111, 107, .08), rgba(111, 195, 184, .08));
+  --th-bg:          light-dark(rgba(31, 111, 107, .12), rgba(111, 195, 184, .12));
+  --row-alt:        light-dark(rgba(120, 95, 60, .05), rgba(255, 255, 255, .03));
+  --row-hover:      light-dark(rgba(255, 196, 64, .18), rgba(242, 200, 121, .10));
+  --marker:         light-dark(#c0782a, #e3a35b);
+}
+
+/* Feed the palette into github-markdown-css's own variables. */
+body .markdown-body {
+  --bgColor-default: var(--bg);
+  --bgColor-muted: var(--code-bg);
+  --bgColor-neutral-muted: var(--inline-code-bg);
+  --fgColor-default: var(--fg);
+  --fgColor-muted: var(--fg-muted);
+  --fgColor-accent: var(--accent);
+  --borderColor-default: var(--border);
+  --borderColor-muted: var(--border);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+html { scroll-padding-top: 16px; }
+body { margin: 0; background: var(--bg); }
+
+main {
+  box-sizing: border-box;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 40px 96px;
+  margin-left: max(calc(var(--toc-width) + 32px), calc((100vw - 900px) / 2));
+}
+body.no-toc main { margin-left: auto; }
+
+.markdown-body { font-size: 16px; line-height: 1.7; }
+.markdown-body pre { position: relative; line-height: 1.5; }
+.markdown-body pre code.hljs { padding: 0; background: transparent; }
+.markdown-body pre.mermaid { background: transparent; text-align: center; }
+.markdown-body li:has(> input[type="checkbox"]) { list-style: none; margin-left: -1.4em; }
+.markdown-body li > input[type="checkbox"] { margin: 0 .4em .2em 0; vertical-align: middle; }
+.markdown-body table { font-size: 14px; }
+.markdown-body table th { white-space: nowrap; }
+
+/* ----- color & highlights ----- */
+body .markdown-body h1 {
+  color: var(--h1);
+  border-bottom: 3px solid;
+  border-image: linear-gradient(90deg, var(--h1), var(--h3) 55%, transparent) 1;
+}
+body .markdown-body h2 {
+  color: var(--h2);
+  border-bottom: 0;
+  border-left: 4px solid var(--h2);
+  border-radius: 0 6px 6px 0;
+  padding: 4px 12px;
+  background: linear-gradient(90deg, var(--h2-tint), transparent 75%);
+}
+body .markdown-body h3 { color: var(--h3); }
+body .markdown-body h4, body .markdown-body h5, body .markdown-body h6 { color: var(--h4); }
+
+body .markdown-body a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--link) 40%, transparent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+body .markdown-body a:visited {
+  color: var(--link-visited);
+  text-decoration-color: color-mix(in srgb, var(--link-visited) 40%, transparent);
+}
+body .markdown-body a:hover { color: var(--link-hover); text-decoration-color: var(--link-hover); }
+body .markdown-body a[href^="http"]::after { content: "\2197"; font-size: .75em; margin-left: 2px; }
+
+body .markdown-body strong {
+  color: var(--strong);
+  background: linear-gradient(transparent 60%, var(--mark) 60%);
+  padding: 0 2px;
+}
+body .markdown-body em { color: var(--em); }
+body .markdown-body mark { background: var(--mark); color: inherit; padding: 0 3px; border-radius: 3px; }
+::selection { background: var(--mark); }
+
+body .markdown-body :not(pre) > code { color: var(--code-fg); background: var(--inline-code-bg); }
+/* Code inside headings and links keeps the heading/link color (must follow the rule above). */
+body .markdown-body :is(h1, h2, h3, h4, h5, h6, a) > code { color: inherit; }
+body .markdown-body pre:not(.mermaid) { box-shadow: inset 3px 0 0 var(--h2); }
+
+body .markdown-body blockquote {
+  color: var(--fg);
+  background: var(--quote-bg);
+  border-left: 4px solid var(--quote-bar);
+  border-radius: 0 8px 8px 0;
+  padding: .6em 1em;
+}
+
+body .markdown-body li::marker { color: var(--marker); font-weight: 600; }
+
+body .markdown-body table th { background: var(--th-bg); color: var(--h1); }
+body .markdown-body table tr { background: transparent; }
+body .markdown-body table tr:nth-child(2n) { background: var(--row-alt); }
+body .markdown-body table tbody tr:hover { background: var(--row-hover); }
+
+body .markdown-body hr {
+  height: 3px;
+  border: 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, transparent, var(--h1), var(--h3), transparent);
+}
+
+.page-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.file-path {
+  flex: 1;
+  min-width: 0;
+  color: var(--fg-muted);
+  font: 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ----- theme switch ----- */
+.seg-switch {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--toc-bg);
+}
+.seg-switch button {
+  padding: 3px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--fg-muted);
+  font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+.seg-switch button:hover { color: var(--accent); }
+.seg-switch button[aria-checked="true"] { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+
+/* ----- raw view: <html data-view="raw"> shows the Markdown source instead of the rendered page ----- */
+:root:not([data-view="raw"]) #raw-view,
+:root[data-view="raw"] #rendered-view,
+:root[data-view="raw"] #toc,
+:root[data-view="raw"] #toc-toggle { display: none !important; }
+:root[data-view="raw"] main { margin-left: auto; }
+#raw-view pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; }
+
+/* "Copy all" shows only in the raw view. */
+#copy-raw {
+  flex-shrink: 0;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--toc-bg);
+  color: var(--fg-muted);
+  font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+#copy-raw:hover { color: var(--accent); border-color: var(--accent); }
+#copy-raw.done { color: #1a7f37; border-color: #1a7f37; }
+:root:not([data-view="raw"]) #copy-raw { display: none; }
+
+/* ----- table of contents ----- */
+#toc {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--toc-width);
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 24px 12px 24px 16px;
+  background: var(--toc-bg);
+  border-right: 1px solid var(--border);
+  font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+body.no-toc #toc, body.no-toc #toc-toggle { display: none; }
+.toc-title {
+  font-weight: 600; text-transform: uppercase; letter-spacing: .05em;
+  font-size: 11px; color: var(--h1); margin: 0 0 8px 8px;
+}
+#toc ul { list-style: none; margin: 0; padding: 0; }
+#toc a {
+  display: block; padding: 4px 8px; border-radius: 6px;
+  color: var(--fg-muted); text-decoration: none; border-left: 2px solid transparent;
+}
+#toc a:hover { color: var(--accent); }
+#toc a.active { color: var(--accent); background: var(--accent-bg); border-left-color: var(--accent); font-weight: 600; }
+#toc .toc-h2 a { padding-left: 20px; }
+#toc .toc-h3 a { padding-left: 32px; font-size: 12px; }
+#toc code { font-size: 90%; }
+
+#toc-toggle {
+  display: none;
+  position: fixed; top: 12px; right: 12px; z-index: 20;
+  width: 36px; height: 36px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--toc-bg); color: var(--fg-muted); font-size: 18px;
+}
+
+@media (max-width: 1100px) {
+  main { margin-left: auto; padding: 24px 20px 80px; }
+  .page-head { padding-right: 44px; }
+  #toc-toggle { display: block; }
+  #toc {
+    z-index: 10; transform: translateX(-100%); transition: transform .2s ease;
+    box-shadow: 0 0 24px rgba(0, 0, 0, .2);
+  }
+  body.toc-open #toc { transform: none; }
+}
+@media (max-width: 600px) {
+  .seg-switch button span, #copy-raw span { display: none; }   /* icons only on phones */
+}
+
+/* ----- copy button ----- */
+.copy-btn {
+  position: absolute; top: 8px; right: 8px;
+  padding: 3px 10px; border-radius: 6px; cursor: pointer;
+  font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  border: 1px solid var(--border); background: var(--bg); color: var(--fg-muted);
+  opacity: 0; transition: opacity .15s;
+}
+.markdown-body pre:hover .copy-btn, .copy-btn:focus { opacity: 1; }
+.copy-btn.done { color: #1a7f37; border-color: #1a7f37; opacity: 1; }
+
+@media print {
+  #toc, #toc-toggle, .copy-btn, .page-head { display: none !important; }
+  main { margin: 0 auto; padding: 0; }
+}
